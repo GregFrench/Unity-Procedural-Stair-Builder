@@ -1,6 +1,6 @@
 # Procedural Stair Builder
 
-A procedural stair builder for Unity. Includes Linear Stairs, Curved Stairs, and Spiral Stairs. Easy to use for quick prototyping or as an in-game asset. Works with Unity 5.0+
+A procedural stair builder for Unity. Includes Linear Stairs, Curved Stairs, and Spiral Stairs. Easy to use for quick prototyping or as an in-game asset. Tested with Unity 5.0+
 
 # To create stairs:
 	
