@@ -106,8 +106,8 @@ public class Circle : MonoBehaviour
             vertices[i + 3] = coord_3;
 
             // front
-            vertices[i + 4] = new Vector3(coord_0.x, height, coord_0.z);
-            vertices[i + 5] = new Vector3(coord_1.x, height, coord_1.z);
+            vertices[i + 4] = new Vector3(coord_0.x, 0, coord_0.z);
+            vertices[i + 5] = new Vector3(coord_1.x, 0, coord_1.z);
             vertices[i + 6] = new Vector3(coord_0.x, height, coord_0.z);
             vertices[i + 7] = new Vector3(coord_1.x, height, coord_1.z);
 
