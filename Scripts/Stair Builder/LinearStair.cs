@@ -3,46 +3,41 @@ using System;
 
 [ExecuteInEditMode]
 public class LinearStair : MonoBehaviour {
-
     public float stepLength;
     public float stepHeight;
     public float stepWidth;
     public int stepCount;
-    
+
     void Start() {
-
         buildMesh ();
-
+        Undo.undoRedoPerformed += UndoRedoCallback;
     }
 
-    void OnValidate()
-    {
+    void UndoRedoCallback() {
+        buildMesh();
+    }
 
+    void OnValidate() {
         stepLength = Mathf.Max(stepLength, 0.1f);
         stepHeight = Mathf.Max(stepHeight, 0.1f);
         stepWidth = Mathf.Max(stepWidth, 0.1f);
         stepCount = Mathf.Max(stepCount, 1);
 
         if (GUI.changed) {
-
             buildMesh ();
-
         }
     }
 
-    void Reset()
-    {
+    void Reset() {
         stepLength = 0.3f;
         stepHeight = 0.2f;
         stepWidth = 2f;
         stepCount = 10;
 
         buildMesh();
-
     }
 
     void buildMesh() {
-
         int vertices_length = 16 * (stepCount + 2);
         int normals_length = 16 * (stepCount + 2);
         int triangles_length = 24 * (stepCount + 2);
@@ -55,7 +50,6 @@ public class LinearStair : MonoBehaviour {
 
         int step = 16;
         for (int i = 0; i < (stepCount * step); i += step) {
-
             // front
             vertices [i+0] = new Vector3 (0, (i * stepHeight) / step, (i * stepLength) / step);
             vertices [i+1] = new Vector3 (stepWidth, (i * stepHeight) / step, (i * stepLength) / step);
@@ -79,7 +73,6 @@ public class LinearStair : MonoBehaviour {
             vertices [i+13] = new Vector3(stepWidth, stepHeight + (i * stepHeight) / step, (i * stepLength) / step);
             vertices [i+14] = new Vector3(0, stepHeight + (i * stepHeight) / step, stepLength + (i * stepLength) / step);
             vertices [i+15] = new Vector3(stepWidth, stepHeight + (i * stepHeight) / step, stepLength + (i * stepLength) / step);
-
         }
 
         // bottom
@@ -97,22 +90,19 @@ public class LinearStair : MonoBehaviour {
         // set triangle array
         step = 6;
         for (int i = 0; i < tri.Length; i += step) {
-
             //  Lower left triangle.
             tri[i] = 0 + (i * 4) / step;
             tri[i+1] = 2 + (i * 4) / step;
             tri[i+2] = 1 + (i * 4) / step;
 
-            //  Upper right triangle.  
+            //  Upper right triangle.
             tri[i+3] = 2 + (i * 4) / step;
             tri[i+4] = 3 + (i * 4) / step;
             tri[i+5] = 1 + (i * 4) / step;
-
         }
 
         step = 16;
         for (int i = 0; i < normals.Length; i += step) {
-
             normals [i+0] = -Vector3.forward;
             normals [i+1] = -Vector3.forward;
             normals [i+2] = -Vector3.forward;
@@ -132,7 +122,6 @@ public class LinearStair : MonoBehaviour {
             normals [i+13] = -Vector3.down;
             normals [i+14] = -Vector3.down;
             normals [i+15] = -Vector3.down;
-
         }
 
         normals [normals_length-8] = -Vector3.up;
@@ -147,7 +136,6 @@ public class LinearStair : MonoBehaviour {
 
         step = 16;
         for (int i = 0, count = 0; i < (stepCount * step); i += step, count += 1) {
-
             // front
             uv[0 + i] = new Vector2(0, 0);
             uv[1 + i] = new Vector2(stepWidth, 0);
@@ -171,7 +159,6 @@ public class LinearStair : MonoBehaviour {
             uv[13 + i] = new Vector2(stepWidth, 0);
             uv[14 + i] = new Vector2(0, stepLength);
             uv[15 + i] = new Vector2(stepWidth, stepLength);
-
         }
 
         // bottom
@@ -200,7 +187,5 @@ public class LinearStair : MonoBehaviour {
 
         GetComponent<MeshCollider>().sharedMesh = null;
         GetComponent<MeshCollider>().sharedMesh = mf.sharedMesh;
-
     }
-
 }

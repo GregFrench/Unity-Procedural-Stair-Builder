@@ -2,7 +2,6 @@
 
 [ExecuteInEditMode]
 public class SpiralStair : MonoBehaviour {
-
     public float innerRadius;
     public float stepWidth;
     public float stepHeight;
@@ -15,14 +14,15 @@ public class SpiralStair : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
         buildMesh ();
-
+        Undo.undoRedoPerformed += UndoRedoCallback;
     }
 
-    void OnValidate()
-    {
+    void UndoRedoCallback() {
+        buildMesh();
+    }
 
+    void OnValidate() {
         innerRadius = Mathf.Max(innerRadius, 0);
         stepWidth = Mathf.Max(stepWidth, 0.1f);
         stepHeight = Mathf.Max(stepHeight, 0);
@@ -31,9 +31,7 @@ public class SpiralStair : MonoBehaviour {
         numSteps = Mathf.Max(numSteps, 1);
 
         if (GUI.changed) {
-
             buildMesh ();
-
         }
     }
 
@@ -72,7 +70,7 @@ public class SpiralStair : MonoBehaviour {
 
         Vector3 coord_0 = new Vector3(0, 0, 0);
         Vector3 coord_1 = new Vector3 (0, 0, 0);
-        Vector3 coord_2 = new Vector3(0, 0, 0); 
+        Vector3 coord_2 = new Vector3(0, 0, 0);
         Vector3 coord_3 = new Vector3 (0, 0, 0);
 
         float degrees;
@@ -112,7 +110,7 @@ public class SpiralStair : MonoBehaviour {
                     coord_0 = new Vector3(pos_start.x, stepThickness + stepHeight * count, pos_start.z);
                     coord_1 = new Vector3(pos_end.x, stepThickness + stepHeight * count, pos_end.z);
                 }
-                
+
 
             } else {
 
@@ -221,7 +219,7 @@ public class SpiralStair : MonoBehaviour {
             tri[i+1] = 2 + (count * 4);
             tri[i+2] = 1 + (count * 4);
 
-            //  Upper right triangle.  
+            //  Upper right triangle.
             tri[i+3] = 2 + (count * 4);
             tri[i+4] = 3 + (count * 4);
             tri[i+5] = 1 + (count * 4);

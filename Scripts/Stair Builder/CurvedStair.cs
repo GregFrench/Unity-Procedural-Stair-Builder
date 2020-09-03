@@ -2,7 +2,6 @@
 
 [ExecuteInEditMode]
 public class CurvedStair : MonoBehaviour {
-
     public float innerRadius;
     public float stepHeight;
     public float stepWidth;
@@ -13,14 +12,15 @@ public class CurvedStair : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
         buildMesh();
-
+        Undo.undoRedoPerformed += UndoRedoCallback;
     }
 
-    void OnValidate()
-    {
+    void UndoRedoCallback() {
+        buildMesh();
+    }
 
+    void OnValidate() {
         innerRadius = Mathf.Max(innerRadius, 0);
         stepHeight = Mathf.Max(stepHeight, 0.1f);
         stepWidth = Mathf.Max(stepWidth, 0.1f);
@@ -29,14 +29,11 @@ public class CurvedStair : MonoBehaviour {
         addToFirstStep = Mathf.Max(addToFirstStep, 0);
 
         if (GUI.changed) {
-
             buildMesh ();
-
         }
     }
 
-    void Reset()
-    {
+    void Reset() {
         innerRadius = 2;
         stepHeight = 0.2f;
         stepWidth = 2;
@@ -45,7 +42,6 @@ public class CurvedStair : MonoBehaviour {
         addToFirstStep = 0;
 
         buildMesh();
-
     }
 
     void buildMesh() {
@@ -67,7 +63,7 @@ public class CurvedStair : MonoBehaviour {
 
         Vector3 coord_0 = new Vector3(0, 0, 0);
         Vector3 coord_1 = new Vector3 (0, 0, 0);
-        Vector3 coord_2 = new Vector3(0, 0, 0); 
+        Vector3 coord_2 = new Vector3(0, 0, 0);
         Vector3 coord_3 = new Vector3 (0, 0, 0);
 
         float degrees;
@@ -79,15 +75,10 @@ public class CurvedStair : MonoBehaviour {
 
         step = 20;
         for (int i = 0, count = 0; i < (numSteps * step) - 4; i += step, count++) {
-
             if (counterClockwise) {
-
                 degrees = 180 + ((angleOfCurve / numSteps) * count);
-
             } else {
-
                 degrees = 180 - ((angleOfCurve / numSteps) * count);
-
             }
 
             pos = getStartPosVectorFromAngle (degrees);
@@ -95,28 +86,20 @@ public class CurvedStair : MonoBehaviour {
             pos_end = pos_start + (pos * stepWidth);
 
             if (counterClockwise) {
-
                 coord_0 = new Vector3(pos_start.x, addToFirstStep + stepHeight + stepHeight * count, pos_start.z);
                 coord_1 = new Vector3(pos_end.x, addToFirstStep + stepHeight + stepHeight * count, pos_end.z);
-
             } else {
-
                 coord_0 = new Vector3(pos_end.x, addToFirstStep + stepHeight + stepHeight * count, pos_end.z);
                 coord_1 = new Vector3(pos_start.x, addToFirstStep + stepHeight + stepHeight * count, pos_start.z);
-
             }
 
             vertices [i + 0] = coord_0;
             vertices [i + 1] = coord_1;
 
             if (counterClockwise) {
-
                 degrees = 180 + ((angleOfCurve / numSteps) * (count + 1));
-
             } else {
-
                 degrees = 180 - ((angleOfCurve / numSteps) * (count + 1));
-
             }
 
             pos = getStartPosVectorFromAngle (degrees);
@@ -124,15 +107,11 @@ public class CurvedStair : MonoBehaviour {
             pos_end = pos_start + (pos * stepWidth);
 
             if (counterClockwise) {
-
                 coord_2 = new Vector3 (pos_start.x, addToFirstStep + stepHeight + stepHeight * count, pos_start.z);
                 coord_3 = new Vector3(pos_end.x, addToFirstStep + stepHeight + stepHeight * count, pos_end.z);
-
             } else {
-
                 coord_2 = new Vector3(pos_end.x, addToFirstStep + stepHeight + stepHeight * count, pos_end.z);
                 coord_3 = new Vector3 (pos_start.x, addToFirstStep + stepHeight + stepHeight * count, pos_start.z);
-
             }
 
             vertices [i + 2] = coord_2;
@@ -161,7 +140,6 @@ public class CurvedStair : MonoBehaviour {
             vertices [i + 17] = new Vector3 (coord_3.x, 0, coord_3.z);
             vertices [i + 18] = new Vector3 (coord_0.x, 0, coord_0.z);
             vertices [i + 19] = new Vector3 (coord_1.x, 0, coord_1.z);
-
         }
 
         // back
@@ -179,7 +157,7 @@ public class CurvedStair : MonoBehaviour {
             tri[i+1] = 2 + (count * 4);
             tri[i+2] = 1 + (count * 4);
 
-            //  Upper right triangle.  
+            //  Upper right triangle.
             tri[i+3] = 2 + (count * 4);
             tri[i+4] = 3 + (count * 4);
             tri[i+5] = 1 + (count * 4);
@@ -249,7 +227,7 @@ public class CurvedStair : MonoBehaviour {
             uv[9 + i] = new Vector2(dist_inner, vertices[i + 9].y);
             uv[10 + i] = new Vector2(0, vertices[i + 10].y);
             uv[11 + i] = new Vector2(dist_inner, vertices[i + 11].y);
-           
+
             // left
             uv[12 + i] = new Vector2(dist, vertices[12 + i].y);
             uv[13 + i] = new Vector2(0, vertices[13 + i].y);
