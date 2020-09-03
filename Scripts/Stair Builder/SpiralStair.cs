@@ -35,8 +35,7 @@ public class SpiralStair : MonoBehaviour {
         }
     }
 
-    void Reset()
-    {
+    void Reset() {
         innerRadius = 1;
         stepWidth = 2;
         stepHeight = 0.2f;
@@ -48,7 +47,6 @@ public class SpiralStair : MonoBehaviour {
         counterClockwise = false;
 
         buildMesh();
-
     }
 
     void buildMesh() {
@@ -82,15 +80,10 @@ public class SpiralStair : MonoBehaviour {
 
         step = 24;
         for (int i = 0, count = 0; i < (numSteps * step); i += step, count++) {
-
             if (counterClockwise) {
-
                 degrees = 180 + ((360f / (float)numStepsPer360) * count);
-
             } else {
-
                 degrees = 180 - ((360f / (float)numStepsPer360) * count);
-
             }
 
             pos = getStartPosVectorFromAngle (degrees);
@@ -98,44 +91,30 @@ public class SpiralStair : MonoBehaviour {
             pos_end = pos_start + (pos * stepWidth);
 
             if (counterClockwise) {
-
-                if (slopedFloor)
-                {
+                if (slopedFloor) {
                     float jump = (stepThickness + stepHeight * (count + 1)) - (stepThickness + stepHeight * count);
                     coord_0 = new Vector3(pos_start.x, (stepThickness + stepHeight * count) - jump, pos_start.z);
                     coord_1 = new Vector3(pos_end.x, (stepThickness + stepHeight * count) - jump, pos_end.z);
                 }
-                else
-                {
+                else {
                     coord_0 = new Vector3(pos_start.x, stepThickness + stepHeight * count, pos_start.z);
                     coord_1 = new Vector3(pos_end.x, stepThickness + stepHeight * count, pos_end.z);
                 }
-
-
             } else {
-
-                if (slopedFloor)
-                {
+                if (slopedFloor) {
                     float jump = (stepThickness + stepHeight * (count + 1)) - (stepThickness + stepHeight * count);
                     coord_0 = new Vector3(pos_end.x, (stepThickness + stepHeight * count) - jump, pos_end.z);
                     coord_1 = new Vector3(pos_start.x, (stepThickness + stepHeight * count) - jump, pos_start.z);
-                }
-                else
-                {
+                } else {
                     coord_0 = new Vector3(pos_end.x, stepThickness + stepHeight * count, pos_end.z);
                     coord_1 = new Vector3(pos_start.x, stepThickness + stepHeight * count, pos_start.z);
                 }
-
             }
 
             if (counterClockwise) {
-
                 degrees = 180 + ((360f / (float)numStepsPer360) * (count + 1));
-
             } else {
-
                 degrees = 180 - ((360f / (float)numStepsPer360) * (count + 1));
-
             }
 
             pos = getStartPosVectorFromAngle (degrees);
@@ -143,15 +122,11 @@ public class SpiralStair : MonoBehaviour {
             pos_end = pos_start + (pos * stepWidth);
 
             if (counterClockwise) {
-
                 coord_2 = new Vector3 (pos_start.x, stepThickness + stepHeight * count, pos_start.z);
                 coord_3 = new Vector3(pos_end.x, stepThickness + stepHeight * count, pos_end.z);
-
             } else {
-
                 coord_2 = new Vector3(pos_end.x, stepThickness + stepHeight * count, pos_end.z);
                 coord_3 = new Vector3 (pos_start.x, stepThickness + stepHeight * count, pos_start.z);
-
             }
 
             // top
@@ -168,11 +143,13 @@ public class SpiralStair : MonoBehaviour {
 
             // right side
             vertices [i + 8] = new Vector3 (coord_1.x, stepHeight * count, coord_1.z);
+
             if (slopedCeiling) {
                 vertices [i + 9] = new Vector3 (coord_3.x, stepHeight * (count + 1), coord_3.z);
             } else {
                 vertices [i + 9] = new Vector3 (coord_3.x, stepHeight * count, coord_3.z);
             }
+
             vertices [i + 10] = new Vector3 (coord_1.x, coord_1.y, coord_1.z);
             vertices [i + 11] = new Vector3 (coord_3.x, coord_3.y, coord_3.z);
 
@@ -182,6 +159,7 @@ public class SpiralStair : MonoBehaviour {
             } else {
                 vertices [i + 12] = new Vector3 (coord_2.x, stepHeight * count, coord_2.z);
             }
+
             vertices [i + 13] = new Vector3 (coord_0.x, stepHeight * count, coord_0.z);
             vertices [i + 14] = new Vector3 (coord_2.x, coord_2.y, coord_2.z);
             vertices [i + 15] = new Vector3 (coord_0.x, coord_0.y, coord_0.z);
@@ -194,6 +172,7 @@ public class SpiralStair : MonoBehaviour {
                 vertices [i + 16] = new Vector3 (coord_2.x, stepHeight * count, coord_2.z);
                 vertices [i + 17] = new Vector3 (coord_3.x, stepHeight * count, coord_3.z);
             }
+
             vertices [i + 18] = new Vector3 (coord_0.x, stepHeight * count, coord_0.z);
             vertices [i + 19] = new Vector3 (coord_1.x, stepHeight * count, coord_1.z);
 
@@ -205,15 +184,14 @@ public class SpiralStair : MonoBehaviour {
                 vertices [i + 20] = new Vector3 (coord_3.x, stepHeight * count, coord_3.z);
                 vertices [i + 21] = new Vector3 (coord_2.x, stepHeight * count, coord_2.z);
             }
+
             vertices [i + 22] = new Vector3 (coord_3.x, coord_2.y, coord_3.z);
             vertices [i + 23] = new Vector3 (coord_2.x, coord_3.y, coord_2.z);
-
         }
 
         // set triangle array
         step = 6;
         for (int i = 0, count = 0; i < tri.Length; i += step, count += 1) {
-
             //  Lower left triangle.
             tri[i] = 0 + (count * 4);
             tri[i+1] = 2 + (count * 4);
@@ -223,12 +201,10 @@ public class SpiralStair : MonoBehaviour {
             tri[i+3] = 2 + (count * 4);
             tri[i+4] = 3 + (count * 4);
             tri[i+5] = 1 + (count * 4);
-
         }
 
         step = 24;
         for (int i = 0; i < normals.Length; i += step) {
-
             // top
             normals [i+0] = -Vector3.down;
             normals [i+1] = -Vector3.down;
@@ -264,13 +240,10 @@ public class SpiralStair : MonoBehaviour {
             normals [i + 21] = -Vector3.forward;
             normals [i + 22] = -Vector3.forward;
             normals [i + 23] = -Vector3.forward;
-
         }
 
         step = 24;
-        for (int i = 0, count = 0; i < vertices.Length; i += step, count += 1)
-        {
-
+        for (int i = 0, count = 0; i < vertices.Length; i += step, count += 1) {
             dist = Vector3.Distance(vertices[i], vertices[i + 2]);
             dist_inner = Vector3.Distance(vertices[i + 1], vertices[i + 3]);
 
@@ -309,7 +282,6 @@ public class SpiralStair : MonoBehaviour {
             uv[21 + i] = new Vector2(stepWidth, 0);
             uv[22 + i] = new Vector2(0, stepThickness);
             uv[23 + i] = new Vector2(stepWidth, stepThickness);
-
         }
 
         mesh.vertices = vertices;
@@ -322,7 +294,6 @@ public class SpiralStair : MonoBehaviour {
 
         GetComponent<MeshCollider>().sharedMesh = null;
         GetComponent<MeshCollider>().sharedMesh = mf.sharedMesh;
-
     }
 
     private Vector3 getStartPosVectorFromAngle(float degrees) {
@@ -332,5 +303,4 @@ public class SpiralStair : MonoBehaviour {
 
         return new Vector3 (x, 0, z);
     }
-
 }

@@ -151,7 +151,6 @@ public class CurvedStair : MonoBehaviour {
         // set triangle array
         step = 6;
         for (int i = 0, count = 0; i < tri.Length; i += step, count += 1) {
-
             //  Lower left triangle.
             tri[i] = 0 + (count * 4);
             tri[i+1] = 2 + (count * 4);
@@ -161,12 +160,10 @@ public class CurvedStair : MonoBehaviour {
             tri[i+3] = 2 + (count * 4);
             tri[i+4] = 3 + (count * 4);
             tri[i+5] = 1 + (count * 4);
-
         }
 
         step = 20;
         for (int i = 0; i < (normals.Length - 4); i += step) {
-
             // top
             normals [i+0] = -Vector3.down;
             normals [i+1] = -Vector3.down;
@@ -196,7 +193,6 @@ public class CurvedStair : MonoBehaviour {
             normals [i + 17] = Vector3.down;
             normals [i + 18] = Vector3.down;
             normals [i + 19] = Vector3.down;
-
         }
 
         normals [normals_length-4] = -Vector3.forward;
@@ -206,7 +202,6 @@ public class CurvedStair : MonoBehaviour {
 
         step = 20;
         for (int i = 0, count = 0; i < vertices.Length - 4; i += step, count += 1) {
-
             dist = Vector3.Distance(vertices[i], vertices[i + 2]);
             dist_inner = Vector3.Distance(vertices[i + 1], vertices[i + 3]);
 
@@ -239,7 +234,6 @@ public class CurvedStair : MonoBehaviour {
             uv [17 + i] = new Vector2(vertices[1].x, vertices[1].z + 0.25f);
             uv [18 + i] = new Vector2(vertices[0].x, vertices[2].z);
             uv [19 + i] = new Vector2(vertices[1].x, vertices[3].z + 0.25f);
-
         }
 
         dist = Vector3.Distance(vertices[vertices_length - 1], vertices[vertices_length - 2]);
@@ -260,7 +254,6 @@ public class CurvedStair : MonoBehaviour {
 
         GetComponent<MeshCollider>().sharedMesh = null;
         GetComponent<MeshCollider> ().sharedMesh = mf.sharedMesh;
-
     }
 
     private Vector3 getStartPosVectorFromAngle(float degrees) {
@@ -270,5 +263,4 @@ public class CurvedStair : MonoBehaviour {
 
         return new Vector3 (x, 0, z);
     }
-
 }
