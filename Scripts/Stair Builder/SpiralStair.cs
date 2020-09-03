@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using UnityEditor;
+using UnityEngine;
 
 [ExecuteInEditMode]
 public class SpiralStair : MonoBehaviour {
